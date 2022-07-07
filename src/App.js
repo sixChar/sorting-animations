@@ -502,10 +502,14 @@ const Selector = (props) =>{
   
   return (
     <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '10px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '10px',
+      background: 'white',
+      height: '60%',
+      borderRadius: '10px',
+      border: '5px solid white',
     }}>
       <label htmlFor={props.label}>{props.label}</label>
       <select id={props.label} defaultValue={props.defaultValue} onChange={props.onChange}>
@@ -543,13 +547,12 @@ function App() {
       gap: '10px',
       width: '100%',
       height: '100vh',
+      background:'black',
     }}>
-      <div style={{
-        marginTop: '10%',
-      }}>
+      <div style={{marginTop:'2%'}}>
         <SortAnimation 
-          width={Math.min(640, window.innerWidth - 10)} 
-          height={540} 
+          width={Math.min(480, window.innerWidth - 10)} 
+          height={Math.min(540, Math.floor(window.innerHeight * .8))} 
           sortFuncIdx={sortFuncIdx || DEFAULT_SORT_INDEX}
           arrSize={arrSize}
           refreshDelay={speed}
@@ -560,6 +563,7 @@ function App() {
         display:'flex',
         direction:'column',
         gap: '20px',
+        height:"18%"
       }}>
 
         <Selector
