@@ -507,7 +507,6 @@ const Selector = (props) =>{
       alignItems: 'center',
       gap: '10px',
       background: 'white',
-      height: '60%',
       borderRadius: '10px',
       border: '5px solid white',
     }}>
@@ -528,8 +527,10 @@ function App() {
   const [sortFuncIdx, setSortFuncIdx] = useState(0);
   const [arrSize, setArrSize] = useState(ARR_SIZES[DEFAULT_SIZE_INDEX][1]);
   const [speed, setSpeed] = useState(SPEEDS[DEFAULT_SPEED_INDEX][1]);
+  const [aniHeight, setAniHeight] = useState(null);
 
-  /*
+  const selectorsRef = useRef(null);
+
   useEffect(()=>{
     let sortData = {arr: random_arr(10)};
     console.log(sortData);
@@ -537,7 +538,17 @@ function App() {
     console.log(sortData);
     
   },[]);
-  */
+
+  useEffect(()=>{
+    if (selectorsRef.current) {
+      const selHeight = selectorsRef.current.clientHeight;
+      // innerheight - selectors height - 10px from flex gap - 10px from margin - 10px so the bottom doesn't touch end of screen
+      const newAniHeight = window.innerHeight - selHeight - 10 - 10 - 10;
+      if (newAniHeight != aniHeight) {
+        setAniHeight(newAniHeight);
+      }
+    } 
+  })
 
   return (
     <div style={{
@@ -549,25 +560,26 @@ function App() {
       height: '100vh',
       background:'black',
     }}>
-      <div style={{marginTop:'2%'}}>
+      <div style={{marginTop:'10px'}}>
         <SortAnimation 
           width={Math.min(480, window.innerWidth - 10)} 
-          height={Math.min(540, Math.floor(window.innerHeight * .8))} 
+          height={aniHeight || Math.min(540, Math.floor(window.innerHeight * .8))} 
           sortFuncIdx={sortFuncIdx || DEFAULT_SORT_INDEX}
           arrSize={arrSize}
           refreshDelay={speed}
         />
       </div>
 
-      <div style={{
+
+      <div ref={selectorsRef} style={{
         display:'flex',
-        direction:'column',
+        direction:'row',
         gap: '20px',
-        height:"18%"
+        flexBasis: 'auto',
       }}>
 
         <Selector
-          label="Sort Algorithm"
+          label="Algorithm"
           options={SORT_FUNCS}
           onChange={(e)=>setSortFuncIdx(e.target.value)}
           indexAsVal          
@@ -583,7 +595,7 @@ function App() {
         />
 
         <Selector
-          label="Animation Speed"
+          label="Speed"
           options={SPEEDS}
           onChange={(e)=>{setSpeed(e.target.value)}}
           defaultValue={SPEEDS[DEFAULT_SPEED_INDEX][1]}
