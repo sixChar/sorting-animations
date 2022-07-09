@@ -57,21 +57,26 @@ function bubble_sort_step(sortData) {
   if (sortData.nextComp === undefined) {
     sortData.nextComp = 0;
     sortData.maxComp = sortData.arr.length;
+    sortData.lastSwap = 0;
   }
 
   let newArr = [...sortData.arr];
   let nextComp = sortData.nextComp;
   let maxComp = sortData.maxComp;
+  let lastSwap = sortData.lastSwap;
 
   if (newArr[nextComp] > newArr[nextComp+1]) {
     const temp = newArr[nextComp];
     newArr[nextComp] = newArr[nextComp+1];
     newArr[nextComp + 1] = temp;
+    lastSwap = nextComp+1;
   }
   nextComp++;
 
   if (nextComp + 1 >= maxComp) {
-    maxComp--;
+    console.log(maxComp, lastSwap)
+    maxComp = lastSwap;
+    lastSwap = 0;
     nextComp = 0;
   }
 
@@ -81,7 +86,8 @@ function bubble_sort_step(sortData) {
     highlighted: [nextComp, nextComp+1],
     nextComp: nextComp,
     maxComp: maxComp,
-    done: maxComp == 1,
+    lastSwap: lastSwap,
+    done: maxComp <= 1,
   };
 }
 
@@ -409,8 +415,69 @@ function cocktail_sort_step(sortData) {
     hadToSwap: hadToSwap,
     done: done,
   };
+}
+
+/*
+function cocktail_sort_step2(sortData) {
+  if (sortData.increasing === undefined) {
+    sortData.increasing = true;
+  }
+
+  let increasing = sortData.increasing;
+
+
+  if (increasing) {
+    if (newArr[nextCheck] > newArr[nextCheck + 1]) {
+      const temp = newArr[nextCheck];
+      newArr[nextCheck] = newArr[nextCheck + 1];
+      newArr[nextCheck + 1] = temp;
+      lastSwap = nextCheck+1;
+    }
+    nextCheck++;
+  }
+  else {
+    if (newArr[nextCheck] <= newArr[nextCheck-1]) {
+      const temp = newArr[nextCheck];
+      newArr[nextCheck] = newArr[nextCheck-1];
+      newArr[nextCheck-1] = temp;
+      lastSwap = nextCheck-1;
+    }
+    nextCheck--;
+  }
+
+
+  if (increasing && nextCheck+1 >= maxCheck) {
+    maxCheck--;
+    increasing=false;
+    nextCheck=maxCheck-1;
+    if (!hadToSwap) {
+      done=true;
+    }
+    hadToSwap = false;
+  }
+  else if (!increasing && nextCheck-1 <= minCheck) {
+    minCheck++;
+    increasing=true;
+    nextCheck=minCheck+1;
+    if (!hadToSwap) {
+      done=true;
+    }
+    hadToSwap=false;
+  }
+
+
+  return {
+    ...sortData,
+    arr:newArr,
+    highlighted: increasing ? [nextCheck, nextCheck+1] : [nextCheck, nextCheck-1],
+    minCheck: minCheck,
+    maxCheck: maxCheck,
+  }
 
 }
+*/
+
+
 
 
 
