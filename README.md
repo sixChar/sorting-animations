@@ -12,6 +12,8 @@ This is a react web app that animates several different sorting algorithms inclu
 
 It also provides options for the size of the array being sorted as well as how fast a given step of the sorting is.
 
+[Try it out!](https://sixchar.github.io/sorting-animations/)
+
 
 
 
