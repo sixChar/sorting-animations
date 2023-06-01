@@ -1,6 +1,10 @@
 
 
 This is a react web app that animates several different sorting algorithms.
+
+Inspired by [this video](https://www.youtube.com/watch?v=kPRA0W1kECg).
+
+
 Algorithms
 | :---: |
 bubble sort    |
